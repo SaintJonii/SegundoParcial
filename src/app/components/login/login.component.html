@@ -1,0 +1,62 @@
+<div class="center-content">
+
+    <mat-card class="example-card">
+        <mat-card-header>
+
+            <mat-card-title>Segundo Parcial</mat-card-title>
+            <mat-card-subtitle>Login ~ Registro</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <mat-tab-group>
+                <mat-tab label="Login">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" value="" [(ngModel)]="log_email">
+                        <mat-icon matSuffix>email</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" placeholder="Password" [(ngModel)]="log_pass">
+                        <mat-icon matSuffix>vpn_key</mat-icon>
+                    </mat-form-field>
+                    <button mat-button color="primary" (click)="login()">Login</button>
+                </mat-tab>
+                <mat-tab label="Register">
+
+                    <mat-form-field class="example-full-width">
+                        <mat-label>User Type</mat-label>
+                        <mat-select [(ngModel)]="userType" name="userType">
+                            <mat-option *ngFor="let user of users" [value]="user.id">
+                                {{user.type}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" value="" [(ngModel)]="reg_email">
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" placeholder="Password" [(ngModel)]="reg_pass">
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="reg_confirm_pass">
+                        <mat-icon matSuffix>mode_edit</mat-icon>
+                    </mat-form-field>
+                    <button mat-button color="primary" (click)="register()">Register</button>
+
+                </mat-tab>
+
+            </mat-tab-group>
+
+        </mat-card-content>
+
+    </mat-card>
+
+</div>

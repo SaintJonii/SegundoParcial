@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "lab4-671fc": {
+      "hosting": {
+        "mod2doParcial": [
+          "lab4-671fc"
+        ]
+      }
+    }
+  }
+}
