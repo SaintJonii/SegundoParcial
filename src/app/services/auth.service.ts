@@ -67,7 +67,6 @@ export class AuthService {
   }
 
   setUserType(email: string, userType: string) {
-    //setear tipo de usuario en el localST, para usar en el guard
     this.afs.collection('userType').add(
       {
         user: email,
@@ -78,7 +77,6 @@ export class AuthService {
   }
 
   getUserType(email: string) {
-    //setear tipo de usuario en el localST, para usar en el guard
     const doc1 = this.afs.collection('userType',
       ref => ref.where('user', '==', email)
     );
@@ -89,9 +87,6 @@ export class AuthService {
         this.docResponse = data[0];
         localStorage.setItem('user', JSON.stringify({ user: email, userType: this.docResponse.userType }));
       });
-
-
-
   }
 
 

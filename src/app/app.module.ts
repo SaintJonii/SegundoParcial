@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
@@ -19,13 +20,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatSelectModule } from '@angular/material/select';
+
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
     NavbarComponent
   ],
   imports: [
+    FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
     AppRoutingModule,
@@ -50,6 +53,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatDividerModule,
     MatListModule,
     FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
