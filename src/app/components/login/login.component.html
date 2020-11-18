@@ -26,12 +26,17 @@
                 <mat-tab label="Register">
 
                     <mat-form-field class="example-full-width">
-                        <mat-label>User Type</mat-label>
+                        <mat-label>Tipo de Usuario</mat-label>
                         <mat-select [(ngModel)]="userType" name="userType">
                             <mat-option *ngFor="let user of users" [value]="user.id">
                                 {{user.type}}
                             </mat-option>
                         </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Nombre y Apellido</mat-label>
+                        <input matInput placeholder="Nombre y Apellido" value="" [(ngModel)]="userName">
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width">

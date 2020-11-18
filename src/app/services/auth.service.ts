@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreDocument, DocumentData } from "@angular/fire/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +42,7 @@ export class AuthService {
       });
   }
 
-  registerUser(email: string, password: string, userType: string) {
+  registerUser(email: string, password: string, userType: string, userName: string) {
     debugger;
     this.auth.createUserWithEmailAndPassword(email, password)
       .then(resp => {
@@ -54,7 +54,7 @@ export class AuthService {
             localStorage.setItem('tokenId', idToken)
             this.userToken = idToken;
 
-            this.setUserType(email, userType);
+            this.setUserType(email, userType, userName);
             this.router.navigate(['/home']);
 
           });
@@ -65,11 +65,12 @@ export class AuthService {
 
   }
 
-  setUserType(email: string, userType: string) {
+  setUserType(email: string, userType: string, userName: string) {
     this.afs.collection('userType').add(
       {
         user: email,
-        userType: userType
+        type: userType,
+        name: userName
       }
     );
     localStorage.setItem('user', JSON.stringify({ user: email, userType: userType }));
@@ -85,16 +86,6 @@ export class AuthService {
         this.docResponse = data[0];
         localStorage.setItem('user', JSON.stringify({ user: email, userType: this.docResponse.userType }));
       });
-  }
-
-  isAdmin(): boolean {
-    let user = JSON.parse(localStorage.getItem('user'));
-    if (user.userType == "1") {
-      return true;
-    }
-    else {
-      return false;
-    }
   }
 
   getToken() {

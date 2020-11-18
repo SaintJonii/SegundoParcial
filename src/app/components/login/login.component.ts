@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
 
   users = [
     { id: 1, type: "ADMIN" },
-    { id: 2, type: "USER" }
+    { id: 2, type: "CLIENTE" }
   ];
 
   log_email: string;
@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   reg_email: string;
   reg_pass: string;
   userType: string;
+  userName: string;
   reg_confirm_pass: string;
 
   constructor(private auth: AuthService) { }
@@ -31,6 +32,6 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    this.auth.registerUser(this.reg_email, this.reg_pass, this.userType);
+    this.auth.registerUser(this.reg_email, this.reg_pass, this.userType, this.userName);
   }
 }
