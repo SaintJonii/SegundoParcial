@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-alta',
   templateUrl: './alta.component.html',
-  styles: ['./alta.component.scss']
+  styleUrls: ['./alta.component.scss']
+
 })
 export class AltaComponent implements OnInit {
+
+  isAdmin: boolean;
 
   mascotas = [
     { id: 1, tipo: "PERRO" },
@@ -13,9 +18,14 @@ export class AltaComponent implements OnInit {
     { id: 3, tipo: "HURON" },
   ];
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.isAdmin = this.authService.isAdmin();
+  }
+
+  nuevaMascota() {
+
   }
 
 }

@@ -15,7 +15,6 @@ export class AuthService {
   constructor(private auth: AngularFireAuth, private router: Router, private afs: AngularFirestore) {
 
     this.auth.authState.subscribe(state => {
-      console.log(state);
       this.authState = state;
 
     });
@@ -83,12 +82,20 @@ export class AuthService {
 
     doc1.valueChanges()
       .subscribe(data => {
-        debugger
         this.docResponse = data[0];
         localStorage.setItem('user', JSON.stringify({ user: email, userType: this.docResponse.userType }));
       });
   }
 
+  isAdmin(): boolean {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if (user.userType == "1") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   getToken() {
     return this.auth.idToken;

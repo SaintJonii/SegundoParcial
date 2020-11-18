@@ -29,7 +29,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatSelectModule } from '@angular/material/select';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
