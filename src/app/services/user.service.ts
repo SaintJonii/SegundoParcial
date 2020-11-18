@@ -6,7 +6,11 @@ import { AngularFirestore } from "@angular/fire/firestore";
 })
 export class UserService {
 
-  constructor(private afs: AngularFirestore) { }
+  idMascota: string;
+
+  constructor(private afs: AngularFirestore) {
+    this.getNextId();
+  }
 
   isAdmin(): boolean {
     let user = JSON.parse(localStorage.getItem('user'));
@@ -19,8 +23,10 @@ export class UserService {
   }
 
   guardarMascota(tipo: string, raza: string, nombre: string, edad: number, propietario: string) {
-    this.afs.collection('mascotas').add(
+
+    this.afs.collection('mascotas').doc(this.idMascota).set(
       {
+        id: this.idMascota,
         tipo: tipo,
         raza: raza,
         nombre: nombre,
@@ -28,8 +34,34 @@ export class UserService {
         propietario: propietario
       }
     );
+
+    this.getNextId();
   }
 
-  actualizarMascota(edad: number, dueño: string) { }
+  actualizarMascota(edad: number, dueño: string, id: string) {
+
+    this.afs.collection('mascotas').doc(id).update({
+      edad: edad,
+      propietario: dueño
+    });
+
+    this.getNextId();
+  }
+
+
+
+
+
+  getNextId() {
+    const doc1 = this.afs.collection('mascotas',
+      ref => ref.orderBy('id', 'asc')
+    );
+
+    doc1.valueChanges()
+      .subscribe(data => {
+        let lastItem: any = data.pop();
+        this.idMascota = (parseInt(lastItem.id) + 1).toString();
+      });
+  }
 
 }

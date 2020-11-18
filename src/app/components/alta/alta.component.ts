@@ -28,6 +28,10 @@ export class AltaComponent implements OnInit {
   edad;
   propietario;
 
+  //variable para modificar
+  isUpdate: boolean = false;
+  id;
+
   constructor(private userService: UserService, private afs: AngularFirestore) { }
 
   ngOnInit(): void {
@@ -41,11 +45,17 @@ export class AltaComponent implements OnInit {
     this.getMascotas();
   }
 
+  actualizarMascota() {
+    this.userService.actualizarMascota(this.edad, this.propietario, this.id);
+    this.getMascotas();
+    this.isUpdate = false;
+  }
+
+
   getCustomers(): any {
     const doc1 = this.afs.collection('userType',
       ref => ref.where('type', '==', "2")
     );
-
     doc1.valueChanges()
       .subscribe(data => {
         this.clientes = data;
@@ -54,11 +64,26 @@ export class AltaComponent implements OnInit {
 
   getMascotas() {
     const doc1 = this.afs.collection('mascotas');
-    debugger;
     doc1.valueChanges()
       .subscribe(data => {
         this.listMascotas = data;
       });
   }
+
+  mascotaModif(idMascota) {
+    this.isUpdate = true;
+    this.listMascotas.forEach(item => {
+      if (item.id == idMascota) {
+        debugger;
+        this.id = item.id;
+        this.tipoMascota = item.tipo;
+        this.raza = item.raza;
+        this.nombre = item.nombre;
+        this.edad = item.edad;
+        this.propietario = item.propietario;
+      }
+    });
+  }
+
 
 }

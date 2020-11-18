@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, OnInit, Input, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AngularFirestore } from "@angular/fire/firestore";
@@ -9,11 +9,13 @@ import { AngularFirestore } from "@angular/fire/firestore";
   styleUrls: ['./listado.component.scss']
 })
 export class ListadoComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['nombre', 'tipo', 'raza', 'edad'];
+  displayedColumns: string[] = ['nombre', 'tipo', 'raza', 'edad', 'propietario', 'acciones'];
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input() listMascotas;
+  @Input() isUpdate;
+  @Output() mascotaModif = new EventEmitter<any>();
 
   constructor(private afs: AngularFirestore) {
   }
@@ -27,9 +29,13 @@ export class ListadoComponent implements AfterViewInit, OnInit {
   }
 
   ngOnChanges() {
-
     this.dataSource = new MatTableDataSource<any>(this.listMascotas);
   }
+
+  editarMascota(e) {
+    this.mascotaModif.emit(e);
+  }
+
 
 }
 
