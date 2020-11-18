@@ -18,7 +18,17 @@ export class UserService {
     }
   }
 
-  guardarMascota(tipo: string, raza: string, nombre: string, edad: number, dueño: string) { }
+  guardarMascota(tipo: string, raza: string, nombre: string, edad: number, propietario: string) {
+    this.afs.collection('mascotas').add(
+      {
+        tipo: tipo,
+        raza: raza,
+        nombre: nombre,
+        edad: edad,
+        propietario: propietario
+      }
+    );
+  }
 
   actualizarMascota(edad: number, dueño: string) { }
 

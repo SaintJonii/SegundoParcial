@@ -20,6 +20,7 @@ export class AltaComponent implements OnInit {
   ];
 
   clientes: any = [];
+  listMascotas: any = [];
 
   tipoMascota;
   raza;
@@ -32,10 +33,12 @@ export class AltaComponent implements OnInit {
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
     this.getCustomers();
+    this.getMascotas();
   }
 
   nuevaMascota() {
-
+    this.userService.guardarMascota(this.tipoMascota, this.raza, this.nombre, this.edad, this.propietario);
+    this.getMascotas();
   }
 
   getCustomers(): any {
@@ -46,6 +49,15 @@ export class AltaComponent implements OnInit {
     doc1.valueChanges()
       .subscribe(data => {
         this.clientes = data;
+      });
+  }
+
+  getMascotas() {
+    const doc1 = this.afs.collection('mascotas');
+    debugger;
+    doc1.valueChanges()
+      .subscribe(data => {
+        this.listMascotas = data;
       });
   }
 

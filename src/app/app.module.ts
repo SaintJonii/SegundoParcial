@@ -27,6 +27,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -38,6 +42,7 @@ import { MatSelectModule } from '@angular/material/select';
     ContactoComponent,
     AltaComponent,
     NavbarComponent
+
   ],
   imports: [
     FlexLayoutModule,
@@ -57,7 +62,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
 
   ],
   providers: [],
