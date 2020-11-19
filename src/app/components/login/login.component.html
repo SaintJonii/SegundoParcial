@@ -12,13 +12,17 @@
                 <mat-tab label="Login">
                     <mat-form-field class="example-full-width">
                         <mat-label>Email</mat-label>
-                        <input matInput placeholder="Email" value="" [(ngModel)]="log_email">
+                        <input matInput placeholder="Email" value="" [(ngModel)]="log_email" [formControl]="email"
+                            required>
+                        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
                         <mat-icon matSuffix>email</mat-icon>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width">
                         <mat-label>Password</mat-label>
-                        <input matInput type="password" placeholder="Password" [(ngModel)]="log_pass">
+                        <input matInput type="password" placeholder="Password" [(ngModel)]="log_pass"
+                            [formControl]="password" required>
+                        <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
                         <mat-icon matSuffix>vpn_key</mat-icon>
                     </mat-form-field>
                     <button mat-button color="primary" (click)="login()">Login</button>
@@ -27,7 +31,7 @@
 
                     <mat-form-field class="example-full-width">
                         <mat-label>Tipo de Usuario</mat-label>
-                        <mat-select [(ngModel)]="userType" name="userType">
+                        <mat-select [(ngModel)]="userType" name="userType" [formControl]="typeControl" required>
                             <mat-option *ngFor="let user of users" [value]="user.id">
                                 {{user.type}}
                             </mat-option>
@@ -36,22 +40,30 @@
 
                     <mat-form-field class="example-full-width">
                         <mat-label>Nombre y Apellido</mat-label>
-                        <input matInput placeholder="Nombre y Apellido" value="" [(ngModel)]="userName">
+                        <input matInput placeholder="Nombre y Apellido" value="" [(ngModel)]="userName"
+                            [formControl]="nameControl" required>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width">
                         <mat-label>Email</mat-label>
-                        <input matInput placeholder="Email" value="" [(ngModel)]="reg_email">
+                        <input matInput placeholder="Email" value="" [(ngModel)]="reg_email"
+                            [formControl]="regMailControl" required>
+                        <mat-error *ngIf="regMailControl.invalid">{{getErrorMessage()}}</mat-error>
+                        <mat-icon matSuffix>email</mat-icon>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width">
                         <mat-label>Password</mat-label>
-                        <input matInput type="password" placeholder="Password" [(ngModel)]="reg_pass">
+                        <input matInput type="password" placeholder="Password" [(ngModel)]="reg_pass"
+                            [formControl]="regPassControl" required>
+                        <mat-error *ngIf="regPassControl.invalid">{{getErrorMessage()}}</mat-error>
+                        <mat-icon matSuffix>vpn_key</mat-icon>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width">
                         <mat-label>Confirm Password</mat-label>
-                        <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="reg_confirm_pass">
+                        <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="reg_confirm_pass"
+                            [formControl]="regConfControl" required>
                         <mat-icon matSuffix>mode_edit</mat-icon>
                     </mat-form-field>
                     <button mat-button color="primary" (click)="register()">Register</button>
