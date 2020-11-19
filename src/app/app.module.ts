@@ -31,6 +31,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { MatSortModule } from '@angular/material/sort';
+import { ChatComponent } from './components/chat/chat.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { MatSortModule } from '@angular/material/sort';
     ListadoComponent,
     ContactoComponent,
     AltaComponent,
-    NavbarComponent
+    NavbarComponent,
+    ChatComponent
 
   ],
   imports: [

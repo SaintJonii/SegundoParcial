@@ -1,0 +1,13 @@
+<div class="container">
+    <div *ngFor="let item of listMsg">
+        <b>{{item.user}}: </b>
+        {{item.msg}}
+    </div>
+
+</div>
+
+<div>
+
+    <input type="text" [(ngModel)]="msj" />
+    <button (click)="send()">Enviar Mensaje</button>
+</div>
