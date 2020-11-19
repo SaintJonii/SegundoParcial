@@ -9,6 +9,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 export class ContactoComponent implements OnInit {
 
   userLogued;
+  userNickname;
   listMsg = [];
 
   constructor(private afs: AngularFirestore) { }

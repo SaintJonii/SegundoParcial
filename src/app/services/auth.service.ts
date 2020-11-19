@@ -73,7 +73,8 @@ export class AuthService {
         name: userName
       }
     );
-    localStorage.setItem('user', JSON.stringify({ user: email, userType: userType }));
+    let alias = email.split('@')[0];
+    localStorage.setItem('user', JSON.stringify({ user: email, alias: alias, userType: userType }));
   }
 
   getUserType(email: string) {
@@ -81,10 +82,12 @@ export class AuthService {
       ref => ref.where('user', '==', email)
     );
 
+    let alias = email.split('@')[0];
+
     doc1.valueChanges()
       .subscribe(data => {
         this.docResponse = data[0];
-        localStorage.setItem('user', JSON.stringify({ user: email, userType: this.docResponse.userType }));
+        localStorage.setItem('user', JSON.stringify({ user: email, alias: alias, userType: this.docResponse.userType }));
       });
   }
 

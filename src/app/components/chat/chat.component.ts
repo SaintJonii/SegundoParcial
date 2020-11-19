@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 
 @Component({
   selector: 'app-chat',
@@ -8,7 +8,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class ChatComponent implements OnInit {
 
   msj: string;
-
   @Output() sendMsg = new EventEmitter<String>();
   @Input() nombreUser: String;
   @Input() listMsg: [];
@@ -16,11 +15,12 @@ export class ChatComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   send() {
-
     this.sendMsg.emit(this.msj);
   }
+
 
 }

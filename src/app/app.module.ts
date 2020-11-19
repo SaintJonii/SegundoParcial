@@ -32,6 +32,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { MatSortModule } from '@angular/material/sort';
 import { ChatComponent } from './components/chat/chat.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { ChatComponent } from './components/chat/chat.component';
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    ScrollingModule
 
   ],
   providers: [],

@@ -1,0 +1,49 @@
+.example-card{
+    max-width: 70%;
+    height: 80%;
+    margin: 20px auto;
+}
+
+.container{
+    position: relative;
+    padding: 10px;
+    height: 96%;
+    border: 5px solid #3F51B5;
+}
+
+.lst-msg{
+    height: 90%;
+}
+
+.new-msg{
+    position: absolute;
+    width: 60%;
+    right: 1%;
+}
+
+.input-text{
+    width: 100%; 
+    margin-bottom: 10px;
+  
+}
+
+.mat-flat-button{
+    position: relative;
+    left: 80%;
+    margin: 0px 5px auto;
+}
+
+.example-viewport {
+    height: 98%;
+    width: 100%;
+    border: 1px solid #3F51B5;
+  }
+  
+  .example-dt {
+    height: 20px;
+    font-weight: bold;
+  }
+  
+  .example-dd {
+    height: 25px;
+  }
