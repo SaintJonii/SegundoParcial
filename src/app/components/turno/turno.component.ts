@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { AngularFirestore } from "@angular/fire/firestore";
 
 @Component({
@@ -9,61 +10,31 @@ import { AngularFirestore } from "@angular/fire/firestore";
 })
 export class TurnoComponent implements OnInit {
 
-  mascotas = [
-    { id: 1, tipo: "PERRO" },
-    { id: 2, tipo: "GATO" },
-    { id: 3, tipo: "HURON" },
-  ];
-
+  adminType: string = "1";
   isAdmin: boolean;
-
-  tipoMascota;
   nombre;
-  mailUser;
-  fecha;
-  listTurnos: any = [];
+  email;
 
-  constructor(private userService: UserService, private afs: AngularFirestore) { }
+  password;
+
+  listAdmins: any = [];
+
+  constructor(private authService: AuthService, private userService: UserService, private afs: AngularFirestore) { }
 
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
 
-    let user: any = JSON.parse(localStorage.getItem('user'));
-    this.nombre = user.name;
-    this.mailUser = user.user;
-    this.getTurnos();
   }
 
-  nuevoTurno() {
-    debugger;
-    this.userService.guardarTurno(this.mailUser, this.nombre, this.tipoMascota, this.fecha);
-    this.getTurnos();
+  nuevoAdmin() {
+    this.authService.registerUser(this.email, this.password, this.adminType, this.nombre);
     this.limpiarInputs();
-  }
-
-  getTurnos() {
-    let doc1;
-
-    if (this.isAdmin) {
-      doc1 = this.afs.collection('turnos');
-    }
-    else {
-      doc1 = this.afs.collection('turnos',
-        ref => ref.where('user', '==', this.mailUser)
-      );
-    }
-
-    doc1.valueChanges()
-      .subscribe(data => {
-        debugger;
-        this.listTurnos = data;
-      });
   }
 
   limpiarInputs() {
     this.nombre = null;
-    this.fecha = null;
-    this.tipoMascota = null;
+    this.email = null;
+    this.password = null;
   }
 
 }

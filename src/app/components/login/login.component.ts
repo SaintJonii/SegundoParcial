@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit {
 
   users = [
     { id: 1, type: "ADMIN" },
-    { id: 2, type: "CLIENTE" }
+    { id: 2, type: "PROFESOR" },
+    { id: 3, type: "ALUMNO" }
   ];
 
   log_email: string;
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.log_email == null || this.log_pass) {
+    debugger;
+    if (this.log_email == null || this.log_pass == null) {
       return;
     }
     else {
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    if (this.reg_email == null || this.reg_pass || this.userType || this.userName) {
+    if (this.reg_email == null || this.reg_pass == null || this.userType == null || this.userName == null) {
       return;
     }
     else {

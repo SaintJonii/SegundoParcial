@@ -6,6 +6,7 @@ import { AltaComponent } from './components/alta/alta.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { LoginGuard } from './guards/login.guard';
 import { TurnoComponent } from './components/turno/turno.component';
+import { AdminGuard } from './guards/admin.guard';
 
 
 const routes: Routes = [
@@ -13,7 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'alta', component: AltaComponent, canActivate: [LoginGuard] },
   { path: 'contacto', component: ContactoComponent, canActivate: [LoginGuard] },
-  { path: 'turno', component: TurnoComponent, canActivate: [LoginGuard] },
+  { path: 'altaAdmin', component: TurnoComponent, canActivate: [AdminGuard] },
 
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: HomeComponent }

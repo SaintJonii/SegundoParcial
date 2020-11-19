@@ -9,11 +9,11 @@ import { AngularFirestore } from "@angular/fire/firestore";
   styleUrls: ['./lista-turno.component.scss']
 })
 export class ListadoTurnoComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['nombre', 'user', 'tipo', 'fecha'];
+  displayedColumns: string[] = ['alumno', 'nota', 'fecha'];
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @Input() listTurnos;
+  @Input() listAlumnos;
   showTable: boolean;
 
   constructor(private afs: AngularFirestore) {
@@ -23,18 +23,18 @@ export class ListadoTurnoComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource<any>(this.listTurnos);
+    this.dataSource = new MatTableDataSource<any>(this.listAlumnos);
     this.dataSource.paginator = this.paginator;
 
   }
 
   ngOnChanges() {
-    this.dataSource = new MatTableDataSource<any>(this.listTurnos);
+    this.dataSource = new MatTableDataSource<any>(this.listAlumnos);
 
   }
 
   hideTable() {
-    if (this.listTurnos.lenght == 0) {
+    if (this.listAlumnos.lenght == 0) {
       this.showTable = false;
     }
     else {

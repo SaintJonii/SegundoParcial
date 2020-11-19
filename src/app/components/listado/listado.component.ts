@@ -9,13 +9,17 @@ import { AngularFirestore } from "@angular/fire/firestore";
   styleUrls: ['./listado.component.scss']
 })
 export class ListadoComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['nombre', 'tipo', 'raza', 'edad', 'propietario', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'cuatri', 'anio', 'profe', 'cupo', 'acciones'];
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @Input() listMascotas;
+  @Input() listMaterias;
   @Input() isUpdate;
-  @Output() mascotaModif = new EventEmitter<any>();
+  @Input() isAlumno;
+  @Output() materiaModif = new EventEmitter<any>();
+  showTable: boolean;
+  listAlumnos = [];
+
 
   constructor(private afs: AngularFirestore) {
   }
@@ -24,16 +28,33 @@ export class ListadoComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource<any>(this.listMascotas);
+    this.dataSource = new MatTableDataSource<any>(this.listMaterias);
     this.dataSource.paginator = this.paginator;
   }
 
   ngOnChanges() {
-    this.dataSource = new MatTableDataSource<any>(this.listMascotas);
+    this.dataSource = new MatTableDataSource<any>(this.listMaterias);
   }
 
-  editarMascota(e) {
-    this.mascotaModif.emit(e);
+  editarMateria(id, nombre, cuatri, cupo) {
+    let element = {
+      id: id,
+      nombre: nombre,
+      cuatri: cuatri,
+      cupo: cupo
+    }
+    this.materiaModif.emit(element);
+  }
+
+  verAlumnos(id) {
+
+    const doc1 = this.afs.collection('materias').doc(id.toString()).collection('alumnos');
+
+    doc1.valueChanges()
+      .subscribe(data => {
+        this.listAlumnos = data;
+      });
+
   }
 
 

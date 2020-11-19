@@ -12,91 +12,122 @@ import { AngularFirestore } from "@angular/fire/firestore";
 export class AltaComponent implements OnInit {
 
   isAdmin: boolean;
+  isAlumno: boolean;
   userName;
 
-  mascotas = [
-    { id: 1, tipo: "PERRO" },
-    { id: 2, tipo: "GATO" },
-    { id: 3, tipo: "HURON" },
+  listCuatri = [
+    { id: 1, name: "1ER CUATRIMESTRE" },
+    { id: 2, name: "2DO CUATRIMESTRE" },
+    { id: 3, name: "INGRESO" },
   ];
 
-  clientes: any = [];
-  listMascotas: any = [];
+  listCurso = [
+    { id: 1, name: "1ER AÑO" },
+    { id: 2, name: "2DO AÑO" },
+    { id: 3, name: "3ER AÑO" },
+    { id: 3, name: "4TO AÑO" },
+  ];
 
-  tipoMascota;
-  raza;
-  nombre;
-  edad;
-  propietario;
+  listProfes: any = [];
+  listMaterias: any = [];
+  listAlumnos: any = [];
+
+  curso;
+  cupo;
+  materia;
+  cuatri;
+  profesor;
+
 
   //variable para modificar
+  showAlta: boolean = true;
   isUpdate: boolean = false;
-  id;
+  materiaId;
+  alumno;
+  alumnoId;
+  nuevoCupo;
 
   constructor(private userService: UserService, private afs: AngularFirestore) { }
 
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
+    this.isAlumno = this.userService.isAlumno();
+    this.showAlta = !this.isAlumno;
+
     this.userName = JSON.parse(localStorage.getItem('user')).name;
-    this.getCustomers();
-    this.getMascotas();
+    this.userService.getNextId();
+    this.getProfes();
+    this.getMaterias();
+    this.getAlumnos();
+
   }
 
-  nuevaMascota() {
-    let dueño = this.isAdmin ? this.propietario : this.userName;
-    this.userService.guardarMascota(this.tipoMascota, this.raza, this.nombre, this.edad, dueño);
-    this.getMascotas();
+  nuevaMateria() {
+    debugger;
+    this.userService.guardarMateria(this.materia, this.cuatri, this.cupo, this.curso, this.profesor);
+
     this.limpiarInputs();
-  }
-
-  actualizarMascota() {
-    this.userService.actualizarMascota(this.edad, this.propietario, this.id);
-    this.getMascotas();
-    this.limpiarInputs();
-    this.isUpdate = false;
+    this.getMaterias();
   }
 
 
-  getCustomers(): any {
+  getProfes(): any {
     const doc1 = this.afs.collection('userType',
       ref => ref.where('type', '==', "2")
     );
     doc1.valueChanges()
       .subscribe(data => {
-        this.clientes = data;
+        this.listProfes = data;
       });
   }
 
-  getMascotas() {
-    const doc1 = this.afs.collection('mascotas');
+  getAlumnos(): any {
+    const doc1 = this.afs.collection('userType',
+      ref => ref.where('type', '==', "3")
+    );
     doc1.valueChanges()
       .subscribe(data => {
-        this.listMascotas = data;
+        this.listAlumnos = data;
       });
   }
 
-  mascotaModif(idMascota) {
-    this.isUpdate = true;
-    this.listMascotas.forEach(item => {
-      if (item.id == idMascota) {
-        debugger;
-        this.id = item.id;
-        this.tipoMascota = item.tipo;
-        this.raza = item.raza;
-        this.nombre = item.nombre;
-        this.edad = item.edad;
-        this.propietario = item.propietario;
-      }
-    });
+  getMaterias(): any {
+    const doc1 = this.afs.collection('materias');
+    doc1.valueChanges()
+      .subscribe(data => {
+        this.listMaterias = data;
+      });
   }
 
+  materiaModif(e) {
+    console.log(e);
+    if (this.isAlumno) {
+      this.showAlta = true;
+    }
+    this.materia = e.nombre;
+    this.cuatri = e.cuatri;
+    this.materiaId = e.id;
+    this.nuevoCupo = e.cupo;
+    this.isUpdate = true;
+  }
+
+  agregarAlumno() {
+    let cupoAdd = (parseInt(this.nuevoCupo) - 1).toString();
+    this.userService.guardarMateriaAlumno(this.materiaId, this.alumno.name, this.alumno.id, cupoAdd);
+    this.limpiarInputs();
+    this.getAlumnos();
+    this.getMaterias();
+    this.isUpdate = false;
+  }
+
+
   limpiarInputs() {
-    this.id = null;
-    this.tipoMascota = null;
-    this.raza = null;
-    this.nombre = null;
-    this.edad = null;
-    this.propietario = null;
+    this.materiaId = null;
+    this.cuatri = null;
+    this.cupo = null;
+    this.curso = null;
+    this.profesor = null;
+    this.materia = null;
   }
 
 

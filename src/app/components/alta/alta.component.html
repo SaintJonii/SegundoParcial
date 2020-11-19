@@ -1,39 +1,20 @@
 <app-navbar></app-navbar>
 
-<div fxLayout="row wrap" fxLayoutAlign="center center" [style.margin-top]="'30px'">
+<div fxLayout="row wrap" fxLayoutAlign="center center" [style.margin-top]="'30px'" *ngIf="showAlta">
     <mat-card class="example-card">
         <mat-card-title *ngIf="!isUpdate">
-            Nueva Mascota
+            Nueva Materia
         </mat-card-title>
         <mat-card-title *ngIf="isUpdate">
-            Actualice los datos de {{nombre}}
+            Nueva Materia
         </mat-card-title>
-        <mat-card-subtitle>Complete con los datos de la mascota</mat-card-subtitle>
+        <mat-card-subtitle>Complete con los datos de la materia</mat-card-subtitle>
         <mat-list>
 
             <mat-list-item>
                 <mat-form-field class="example-full-width">
-                    <mat-label>Tipo de Mascota</mat-label>
-                    <mat-select name="mascota" [(ngModel)]="tipoMascota" [disabled]="isUpdate">
-                        <mat-option *ngFor="let mascota of mascotas" [value]="mascota.tipo">
-                            {{mascota.tipo}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </mat-list-item>
-
-            <mat-list-item>
-                <mat-form-field class="example-full-width">
-                    <mat-label>Raza</mat-label>
-                    <input matInput placeholder="Raza" value="" type="text" [(ngModel)]="raza" [disabled]="isUpdate">
-                    <mat-icon matSuffix>pets</mat-icon>
-                </mat-form-field>
-            </mat-list-item>
-
-            <mat-list-item>
-                <mat-form-field class="example-full-width">
-                    <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Nombre" value="" type="text" [(ngModel)]="nombre"
+                    <mat-label>Materia</mat-label>
+                    <input matInput placeholder="Materia" value="" type="text" [(ngModel)]="materia"
                         [disabled]="isUpdate">
                     <mat-icon matSuffix>info</mat-icon>
                 </mat-form-field>
@@ -41,34 +22,67 @@
 
             <mat-list-item>
                 <mat-form-field class="example-full-width">
-                    <mat-label>Edad</mat-label>
-                    <input matInput value="" type="number" [(ngModel)]="edad">
-                    <mat-icon matSuffix>api</mat-icon>
+                    <mat-label>Cuatrimestre</mat-label>
+                    <mat-select name="cuatri" [(ngModel)]="cuatri" [disabled]="isUpdate">
+                        <mat-option *ngFor="let cuatri of listCuatri" [value]="cuatri.name">
+                            {{cuatri.name}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </mat-list-item>
 
-            <mat-list-item *ngIf="isAdmin">
+            <mat-list-item *ngIf="!isUpdate">
                 <mat-form-field class="example-full-width">
-                    <mat-label>Dueño</mat-label>
-                    <mat-select name="propietario" [(ngModel)]="propietario">
-                        <mat-option *ngFor="let cliente of clientes" [value]="cliente.name">
-                            {{cliente.name}}
+                    <mat-label>Cupo Alumnos</mat-label>
+                    <input matInput value="" type="number" [(ngModel)]="cupo">
+                </mat-form-field>
+            </mat-list-item>
+
+            <mat-list-item *ngIf="!isUpdate">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Año</mat-label>
+                    <mat-select name="curso" [(ngModel)]="curso">
+                        <mat-option *ngFor="let curso of listCurso" [value]="curso.name">
+                            {{curso.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-list-item>
+
+            <mat-list-item *ngIf="!isUpdate">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Profesor</mat-label>
+                    <mat-select name="profesor" [(ngModel)]="profesor">
+                        <mat-option *ngFor="let profe of listProfes" [value]="profe.name">
+                            {{profe.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-list-item>
+
+            <mat-list-item *ngIf="isUpdate">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Alumno</mat-label>
+                    <mat-select name="alumno" [(ngModel)]="alumno">
+                        <mat-option *ngFor="let alumno of listAlumnos" [value]="alumno">
+                            {{alumno.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </mat-list-item>
 
 
-            <button mat-button *ngIf="!isUpdate" color="primary" (click)="nuevaMascota()">Guardar
-                Mascota</button>
-            <button mat-button class="btn-edit" *ngIf="isUpdate" color="warn" (click)="actualizarMascota()">Actualizar
-                Mascota</button>
+            <button mat-button color="primary" (click)="nuevaMateria()" *ngIf="!isUpdate">Guardar
+                Materia</button>
+            <button mat-button class="btn-edit" *ngIf="isUpdate" color="warn" (click)="agregarAlumno()">Agregar Alumno
+            </button>
         </mat-list>
     </mat-card>
 
 </div>
 
 <div class="container">
-    <app-listado [listMascotas]="listMascotas" [isUpdate]="isUpdate" (mascotaModif)="mascotaModif($event)">
+    <app-listado [listMaterias]="listMaterias" [isUpdate]="isUpdate" [isAlumno]="isAlumno"
+        (materiaModif)="materiaModif($event)">
     </app-listado>
 </div>

@@ -6,7 +6,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 })
 export class UserService {
 
-  idMascota: string;
+  idMateria: string;
 
   constructor(private afs: AngularFirestore) {
     this.getNextId();
@@ -22,32 +22,56 @@ export class UserService {
     }
   }
 
-  guardarMascota(tipo: string, raza: string, nombre: string, edad: number, propietario: string) {
+  isAlumno(): boolean {
+    let user = JSON.parse(localStorage.getItem('user'));
+    if (user.userType == "3") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+
+  guardarMateria(nombre: string, cuatri: string, cupo: string, año: number, profe: string) {
 
     debugger;
-    this.afs.collection('mascotas').doc(this.idMascota).set(
+    this.afs.collection('materias').doc(this.idMateria).set(
       {
-        id: this.idMascota,
-        tipo: tipo,
-        raza: raza,
+        id: this.idMateria,
+        cuatri: cuatri,
+        cupo: cupo,
         nombre: nombre,
-        edad: edad,
-        propietario: propietario
+        anio: año,
+        profe: profe
       }
     );
 
     this.getNextId();
   }
 
-  actualizarMascota(edad: number, dueño: string, id: string) {
+  guardarMateriaAlumno(id: string, alumno: string, alumnoId: string, cupo: string) {
 
-    this.afs.collection('mascotas').doc(id).update({
-      edad: edad,
-      propietario: dueño
+    debugger;
+    this.afs.collection('materias').doc(id).collection('alumnos').add({
+      alumno: alumno,
+      alumnoId: alumnoId,
+      fecha: new Date()
     });
 
+    this.actualizarCupo(id, cupo);
     this.getNextId();
   }
+
+  actualizarCupo(id: String, cupo: String) {
+    this.afs.collection('materias').doc(id.toString()).update({
+      cupo: cupo
+    });
+
+
+  }
+
+
 
   guardarTurno(userMail: string, nombre: string, tipo: string, fecha: string) {
 
@@ -63,14 +87,22 @@ export class UserService {
   }
 
   getNextId() {
-    const doc1 = this.afs.collection('mascotas',
+    const doc1 = this.afs.collection('materias',
       ref => ref.orderBy('id', 'asc')
     );
 
     doc1.valueChanges()
       .subscribe(data => {
-        let lastItem: any = data.pop();
-        this.idMascota = (parseInt(lastItem.id) + 1).toString();
+        //cuando la tabla esta vacia, cargo el primer ID por default
+        if (data.length == 0) {
+          this.idMateria = "1";
+        }
+        else {
+          let lastItem: any = data.pop();
+          this.idMateria = (parseInt(lastItem.id) + 1).toString();
+        }
+
+
       });
   }
 
