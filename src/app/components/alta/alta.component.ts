@@ -12,6 +12,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 export class AltaComponent implements OnInit {
 
   isAdmin: boolean;
+  userName;
 
   mascotas = [
     { id: 1, tipo: "PERRO" },
@@ -36,18 +37,22 @@ export class AltaComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
+    this.userName = JSON.parse(localStorage.getItem('user')).name;
     this.getCustomers();
     this.getMascotas();
   }
 
   nuevaMascota() {
-    this.userService.guardarMascota(this.tipoMascota, this.raza, this.nombre, this.edad, this.propietario);
+    let dueño = this.isAdmin ? this.propietario : this.userName;
+    this.userService.guardarMascota(this.tipoMascota, this.raza, this.nombre, this.edad, dueño);
     this.getMascotas();
+    this.limpiarInputs();
   }
 
   actualizarMascota() {
     this.userService.actualizarMascota(this.edad, this.propietario, this.id);
     this.getMascotas();
+    this.limpiarInputs();
     this.isUpdate = false;
   }
 
@@ -83,6 +88,15 @@ export class AltaComponent implements OnInit {
         this.propietario = item.propietario;
       }
     });
+  }
+
+  limpiarInputs() {
+    this.id = null;
+    this.tipoMascota = null;
+    this.raza = null;
+    this.nombre = null;
+    this.edad = null;
+    this.propietario = null;
   }
 
 

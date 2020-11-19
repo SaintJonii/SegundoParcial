@@ -74,7 +74,7 @@ export class AuthService {
       }
     );
     let alias = email.split('@')[0];
-    localStorage.setItem('user', JSON.stringify({ user: email, alias: alias, userType: userType }));
+    localStorage.setItem('user', JSON.stringify({ user: email, alias: alias, userType: userType, name: userName }));
   }
 
   getUserType(email: string) {
@@ -87,7 +87,8 @@ export class AuthService {
     doc1.valueChanges()
       .subscribe(data => {
         this.docResponse = data[0];
-        localStorage.setItem('user', JSON.stringify({ user: email, alias: alias, userType: this.docResponse.userType }));
+        debugger;
+        localStorage.setItem('user', JSON.stringify({ user: email, alias: alias, userType: this.docResponse.type, name: this.docResponse.name }));
       });
   }
 
@@ -100,6 +101,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
+    debugger;
     return localStorage.getItem('tokenId') != null;
   }
 

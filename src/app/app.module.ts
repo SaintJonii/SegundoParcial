@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { ListadoComponent } from './components/listado/listado.component';
+import { ListadoTurnoComponent } from './components/listadoTurno/lista-turno.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { AltaComponent } from './components/alta/alta.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,6 +34,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { ChatComponent } from './components/chat/chat.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { TurnoComponent } from './components/turno/turno.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -41,10 +45,12 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     LoginComponent,
     HomeComponent,
     ListadoComponent,
+    ListadoTurnoComponent,
     ContactoComponent,
     AltaComponent,
     NavbarComponent,
-    ChatComponent
+    ChatComponent,
+    TurnoComponent
 
   ],
   imports: [
@@ -69,10 +75,15 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    ScrollingModule
+    ScrollingModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ],
-  providers: [],
+  providers: [
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

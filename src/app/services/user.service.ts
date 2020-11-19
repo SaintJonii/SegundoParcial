@@ -24,6 +24,7 @@ export class UserService {
 
   guardarMascota(tipo: string, raza: string, nombre: string, edad: number, propietario: string) {
 
+    debugger;
     this.afs.collection('mascotas').doc(this.idMascota).set(
       {
         id: this.idMascota,
@@ -48,9 +49,18 @@ export class UserService {
     this.getNextId();
   }
 
+  guardarTurno(userMail: string, nombre: string, tipo: string, fecha: string) {
 
+    this.afs.collection('turnos').add(
+      {
+        user: userMail,
+        nombre: nombre,
+        tipo: tipo,
+        fecha: fecha
+      }
+    );
 
-
+  }
 
   getNextId() {
     const doc1 = this.afs.collection('mascotas',
